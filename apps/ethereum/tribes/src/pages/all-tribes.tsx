@@ -11,13 +11,12 @@ import Link from 'next/link';
 
 const AllTribes = () => {
 	const { address } = useEthereum();
-	const { Tribes, Join } = useTribes();
+	const { Tribes, Join, TotalTenants } = useTribes();
 	const router = useRouter();
 	const { data, isLoading: allTribesLoading } = Tribes();
-
 	const {
 		mutate,
-		isLoading: joinTribeLoading,
+		isLoading: joinTribeLoading,		
 		error,
 	} = Join({
 		onSuccess: () => router.push('/my-tribe'),
@@ -44,7 +43,7 @@ const AllTribes = () => {
 				<div className={styles.container}>
 					<h1>Tribes</h1>
 					{address ? (
-						!data ? (
+						!data || data.length === 0 ? (
 							<>
 								<h5>There are currently no existing tribes.</h5>
 								<Link href="/">Go back home</Link>
